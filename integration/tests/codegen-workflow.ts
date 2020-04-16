@@ -120,7 +120,7 @@ const getConfig = async () => {
 
 /**
  * Helper to load a client document from a file
- * 
+ *
  * @param name Client document name
  */
 async function getDocument(name: string) {
@@ -292,8 +292,8 @@ test('Find at most one comment on Note 1', async (done) => {
 
     const { document } = await getDocument('findComments');
 
-    const response = await client.query({ query: document, variables: { fields: { noteId: 1 }, limit: 1 } });
-    
+    const response = await client.query({ query: document, variables: { filter: { noteId: 1 }, limit: 1 } });
+
     expect(response.data).toBeDefined()
     const notes = response.data.findComments
     expect(notes).toHaveLength(1);
@@ -321,8 +321,8 @@ test('Find comments on Note 1 except first', async (done) => {
 
     const { document } = await getDocument('findComments');
 
-    const response = await client.query({ query: document, variables: { fields: { noteId: 1 }, offset: 1 } });
-    
+    const response = await client.query({ query: document, variables: { filter: { noteId: 1 }, offset: 1 } });
+
     expect(response.data).toBeDefined()
     const notes = response.data.findComments
     expect(notes).toHaveLength(1);
@@ -363,7 +363,7 @@ test('Should create a new Note', async (done) => {
 })
 
 test('Delete Note 1', async done => {
-    const response = await deleteNote(client, { id: '2' });
+    const response = await deleteNote(client, { id: '2', title: 'Note B' });
     expect(response.data).toBeDefined();
     expect(response.data.deleteNote).toEqual({ id: '2', description: 'Note B Description', title: 'Note B' });
 
@@ -383,26 +383,26 @@ test('Test custom query', async done => {
     done();
 })
 
-async function updateNote(input: any, client: ApolloServerTestClient) {
+async function updateNote(data: any, client: ApolloServerTestClient) {
     const { document } = await getDocument('updateNote');
 
-    const response = await client.mutate({ mutation: document, variables: { input } });
+    const response = await client.mutate({ mutation: document, variables: { data } });
 
     return response;
 }
 
-async function createNote(client: ApolloServerTestClient, input: any) {
+async function createNote(client: ApolloServerTestClient, data: any) {
     const { document } = await getDocument('createNote');
 
-    const response = await client.mutate({ mutation: document, variables: { input } });
+    const response = await client.mutate({ mutation: document, variables: { data } });
 
     return response;
 }
 
-async function deleteNote(client: ApolloServerTestClient, input: any) {
+async function deleteNote(client: ApolloServerTestClient, data: any) {
     const { document } = await getDocument('deleteNote');
 
-    const response = await client.mutate({ mutation: document, variables: { input } });
+    const response = await client.mutate({ mutation: document, variables: { data } });
 
     return response;
 }
@@ -410,7 +410,7 @@ async function deleteNote(client: ApolloServerTestClient, input: any) {
 async function findNote(id: string, client: ApolloServerTestClient) {
     const { document } = await getDocument('findNotes');
 
-    const response = await client.query({ query: document, variables: { fields: { id } } });
+    const response = await client.query({ query: document, variables: { filter: { id } } });
 
     return response;
 }
@@ -418,7 +418,7 @@ async function findNote(id: string, client: ApolloServerTestClient) {
 async function findNoteComments(noteId: string, client: ApolloServerTestClient) {
     const { document } = await getDocument('findComments');
 
-    const response = await client.query({ query: document, variables: { fields: { noteId } } });
+    const response = await client.query({ query: document, variables: { filter: { noteId } } });
 
     return response;
 }

@@ -4,49 +4,50 @@
 type Comment {
   id: ID!
   text: String
-  description: String
+  description: String!
+  title: String!
 
-  """@manyToOne field: 'comments', key: 'noteId'"""
-  note: Note
+  """@manyToOne field: 'comments', key: 'noteCommentId'"""
+  noteComment: Note
 }
 
 input CommentData {
   id: ID
   text: String
-  description: String
-  noteId: ID
+  description: String!
+  title: String!
+  noteCommentId: ID
 }
 
 input CommentFilter {
   id: ID
   text: String
   description: String
-  noteId: ID
+  title: String
+  noteCommentId: ID
 }
 
 type Mutation {
   createNote(data: NoteData!): Note!
   updateNote(data: NoteData!): Note!
-  deleteNote(data: NoteData!): Note!
   createComment(data: CommentData!): Comment!
   updateComment(data: CommentData!): Comment!
-  deleteComment(data: CommentData!): Comment!
 }
 
 """ @model """
 type Note {
   id: ID!
   title: String!
-  description: String
+  description: String!
 
-  """@oneToMany field: 'note', key: 'noteId'"""
+  """@oneToMany field: 'noteComment', key: 'noteCommentId'"""
   comments: [Comment]!
 }
 
 input NoteData {
   id: ID
   title: String!
-  description: String
+  description: String!
 }
 
 input NoteFilter {
@@ -60,13 +61,4 @@ type Query {
   findNotes(filter: NoteFilter, limit: Int, offset: Int): [Note]!
   findAllComments(limit: Int, offset: Int): [Comment]!
   findComments(filter: CommentFilter, limit: Int, offset: Int): [Comment]!
-}
-
-type Subscription {
-  newNote(data: NoteData): Note!
-  updatedNote(data: NoteData): Note!
-  deletedNote(data: NoteData): Note!
-  newComment(data: CommentData): Comment!
-  updatedComment(data: CommentData): Comment!
-  deletedComment(data: CommentData): Comment!
 }

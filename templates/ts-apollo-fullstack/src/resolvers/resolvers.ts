@@ -8,13 +8,13 @@
 export default {
   Note: {
     comments: (parent, args, context) => {
-      return context.Comment.batchLoadData("noteId", parent.id, context)
+      return context.Comment.batchLoadData("noteCommentId", parent.id, context)
     },
   },
 
   Comment: {
-    note: (parent, args, context) => {
-      return context.Note.findBy({ id: parent.noteId }).then(
+    noteComment: (parent, args, context) => {
+      return context.Note.findBy({ id: parent.noteCommentId }).then(
         (results) => results[0]
       )
     },
@@ -44,50 +44,11 @@ export default {
     updateNote: (parent, args, context) => {
       return context.Note.update(args.data, context)
     },
-    deleteNote: (parent, args, context) => {
-      return context.Note.delete(args.data, context)
-    },
     createComment: (parent, args, context) => {
       return context.Comment.create(args.data, context)
     },
     updateComment: (parent, args, context) => {
       return context.Comment.update(args.data, context)
-    },
-    deleteComment: (parent, args, context) => {
-      return context.Comment.delete(args.data, context)
-    },
-  },
-
-  Subscription: {
-    newNote: {
-      subscribe: (parent, args, context) => {
-        return context.Note.subscribeToCreate(args, context)
-      },
-    },
-    updatedNote: {
-      subscribe: (parent, args, context) => {
-        return context.Note.subscribeToUpdate(args, context)
-      },
-    },
-    deletedNote: {
-      subscribe: (parent, args, context) => {
-        return context.Note.subscribeToDelete(args, context)
-      },
-    },
-    newComment: {
-      subscribe: (parent, args, context) => {
-        return context.Comment.subscribeToCreate(args, context)
-      },
-    },
-    updatedComment: {
-      subscribe: (parent, args, context) => {
-        return context.Comment.subscribeToUpdate(args, context)
-      },
-    },
-    deletedComment: {
-      subscribe: (parent, args, context) => {
-        return context.Comment.subscribeToDelete(args, context)
-      },
     },
   },
 }

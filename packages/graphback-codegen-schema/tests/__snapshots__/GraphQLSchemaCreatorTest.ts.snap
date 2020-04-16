@@ -11,25 +11,31 @@ type Comment {
   noteComment: Note!
 }
 
-input CommentInput {
+input CommentData {
+  id: ID
+  title: String!
+  description: String!
+  note_id: ID!
+}
+
+input CommentFilter {
   id: ID
   title: String
   description: String
-  noteComment: ID
   note_id: ID
 }
 
 type Mutation {
   likeNote(id: ID!): Note!
-  createNote(input: NoteInput): Note!
-  updateNote(input: NoteInput): Note!
-  deleteNote(input: NoteInput): Note!
-  createComment(input: CommentInput): Comment!
-  updateComment(input: CommentInput): Comment!
-  deleteComment(input: CommentInput): Comment!
-  createTest(input: TestInput): Test!
-  updateTest(input: TestInput): Test!
-  deleteTest(input: TestInput): Test!
+  createNote(data: NoteData!): Note!
+  updateNote(data: NoteData!): Note!
+  deleteNote(data: NoteData!): Note!
+  createComment(data: CommentData!): Comment!
+  updateComment(data: CommentData!): Comment!
+  deleteComment(data: CommentData!): Comment!
+  createTest(data: TestData!): Test!
+  updateTest(data: TestData!): Test!
+  deleteTest(data: TestData!): Test!
 }
 
 \\"\\"\\" @model \\"\\"\\"
@@ -45,7 +51,14 @@ type Note {
   test: Test
 }
 
-input NoteInput {
+input NoteData {
+  id: ID
+  title: String!
+  description: String!
+  test_id: ID
+}
+
+input NoteFilter {
   id: ID
   title: String
   description: String
@@ -55,23 +68,23 @@ input NoteInput {
 type Query {
   getLikedNotes(id: ID!, names: [String]!): Note!
   findAllNotes(limit: Int, offset: Int): [Note]!
-  findNotes(fields: NoteInput, limit: Int, offset: Int): [Note]!
+  findNotes(filter: NoteFilter, limit: Int, offset: Int): [Note]!
   findAllComments(limit: Int, offset: Int): [Comment]!
-  findComments(fields: CommentInput, limit: Int, offset: Int): [Comment]!
+  findComments(filter: CommentFilter, limit: Int, offset: Int): [Comment]!
   findAllTests(limit: Int, offset: Int): [Test]!
-  findTests(fields: TestInput, limit: Int, offset: Int): [Test]!
+  findTests(filter: TestFilter, limit: Int, offset: Int): [Test]!
 }
 
 type Subscription {
-  newNote(input: NoteInput): Note!
-  updatedNote(input: NoteInput): Note!
-  deletedNote(input: NoteInput): Note!
-  newComment(input: CommentInput): Comment!
-  updatedComment(input: CommentInput): Comment!
-  deletedComment(input: CommentInput): Comment!
-  newTest(input: TestInput): Test!
-  updatedTest(input: TestInput): Test!
-  deletedTest(input: TestInput): Test!
+  newNote(data: NoteData): Note!
+  updatedNote(data: NoteData): Note!
+  deletedNote(data: NoteData): Note!
+  newComment(data: CommentData): Comment!
+  updatedComment(data: CommentData): Comment!
+  deletedComment(data: CommentData): Comment!
+  newTest(data: TestData): Test!
+  updatedTest(data: TestData): Test!
+  deletedTest(data: TestData): Test!
 }
 
 \\"\\"\\"@model\\"\\"\\"
@@ -80,7 +93,12 @@ type Test {
   name: String
 }
 
-input TestInput {
+input TestData {
+  id: ID
+  name: String
+}
+
+input TestFilter {
   id: ID
   name: String
 }
@@ -98,25 +116,31 @@ type Comment {
   noteComment: Note!
 }
 
-input CommentInput {
+input CommentData {
+  id: ID
+  title: String!
+  description: String!
+  note_id: ID!
+}
+
+input CommentFilter {
   id: ID
   title: String
   description: String
-  noteComment: ID
   note_id: ID
 }
 
 type Mutation {
   likeNote(id: ID!): Note!
-  createNote(input: NoteInput): Note!
-  updateNote(input: NoteInput): Note!
-  deleteNote(input: NoteInput): Note!
-  createComment(input: CommentInput): Comment!
-  updateComment(input: CommentInput): Comment!
-  deleteComment(input: CommentInput): Comment!
-  createTest(input: TestInput): Test!
-  updateTest(input: TestInput): Test!
-  deleteTest(input: TestInput): Test!
+  createNote(data: NoteData!): Note!
+  updateNote(data: NoteData!): Note!
+  deleteNote(data: NoteData!): Note!
+  createComment(data: CommentData!): Comment!
+  updateComment(data: CommentData!): Comment!
+  deleteComment(data: CommentData!): Comment!
+  createTest(data: TestData!): Test!
+  updateTest(data: TestData!): Test!
+  deleteTest(data: TestData!): Test!
 }
 
 \\"\\"\\" @model \\"\\"\\"
@@ -132,7 +156,14 @@ type Note {
   test: Test
 }
 
-input NoteInput {
+input NoteData {
+  id: ID
+  title: String!
+  description: String!
+  test_id: ID
+}
+
+input NoteFilter {
   id: ID
   title: String
   description: String
@@ -142,23 +173,23 @@ input NoteInput {
 type Query {
   getLikedNotes(id: ID!, names: [String]!): Note!
   findAllNotes(limit: Int, offset: Int): [Note]!
-  findNotes(fields: NoteInput, limit: Int, offset: Int): [Note]!
+  findNotes(filter: NoteFilter, limit: Int, offset: Int): [Note]!
   findAllComments(limit: Int, offset: Int): [Comment]!
-  findComments(fields: CommentInput, limit: Int, offset: Int): [Comment]!
+  findComments(filter: CommentFilter, limit: Int, offset: Int): [Comment]!
   findAllTests(limit: Int, offset: Int): [Test]!
-  findTests(fields: TestInput, limit: Int, offset: Int): [Test]!
+  findTests(filter: TestFilter, limit: Int, offset: Int): [Test]!
 }
 
 type Subscription {
-  newNote(input: NoteInput): Note!
-  updatedNote(input: NoteInput): Note!
-  deletedNote(input: NoteInput): Note!
-  newComment(input: CommentInput): Comment!
-  updatedComment(input: CommentInput): Comment!
-  deletedComment(input: CommentInput): Comment!
-  newTest(input: TestInput): Test!
-  updatedTest(input: TestInput): Test!
-  deletedTest(input: TestInput): Test!
+  newNote(data: NoteData): Note!
+  updatedNote(data: NoteData): Note!
+  deletedNote(data: NoteData): Note!
+  newComment(data: CommentData): Comment!
+  updatedComment(data: CommentData): Comment!
+  deletedComment(data: CommentData): Comment!
+  newTest(data: TestData): Test!
+  updatedTest(data: TestData): Test!
+  deletedTest(data: TestData): Test!
 }
 
 \\"\\"\\"@model\\"\\"\\"
@@ -167,7 +198,12 @@ type Test {
   name: String
 }
 
-input TestInput {
+input TestData {
+  id: ID
+  name: String
+}
+
+input TestFilter {
   id: ID
   name: String
 }
@@ -185,25 +221,31 @@ type Comment {
   noteComment: Note!
 }
 
-input CommentInput {
+input CommentData {
+  id: ID
+  title: String!
+  description: String!
+  note_id: ID!
+}
+
+input CommentFilter {
   id: ID
   title: String
   description: String
-  noteComment: ID
   note_id: ID
 }
 
 type Mutation {
   likeNote(id: ID!): Note!
-  createNote(input: NoteInput): Note!
-  updateNote(input: NoteInput): Note!
-  deleteNote(input: NoteInput): Note!
-  createComment(input: CommentInput): Comment!
-  updateComment(input: CommentInput): Comment!
-  deleteComment(input: CommentInput): Comment!
-  createTest(input: TestInput): Test!
-  updateTest(input: TestInput): Test!
-  deleteTest(input: TestInput): Test!
+  createNote(data: NoteData!): Note!
+  updateNote(data: NoteData!): Note!
+  deleteNote(data: NoteData!): Note!
+  createComment(data: CommentData!): Comment!
+  updateComment(data: CommentData!): Comment!
+  deleteComment(data: CommentData!): Comment!
+  createTest(data: TestData!): Test!
+  updateTest(data: TestData!): Test!
+  deleteTest(data: TestData!): Test!
 }
 
 \\"\\"\\" @model \\"\\"\\"
@@ -219,7 +261,14 @@ type Note {
   test: Test
 }
 
-input NoteInput {
+input NoteData {
+  id: ID
+  title: String!
+  description: String!
+  test_id: ID
+}
+
+input NoteFilter {
   id: ID
   title: String
   description: String
@@ -229,23 +278,23 @@ input NoteInput {
 type Query {
   getLikedNotes(id: ID!, names: [String]!): Note!
   findAllNotes(limit: Int, offset: Int): [Note]!
-  findNotes(fields: NoteInput, limit: Int, offset: Int): [Note]!
+  findNotes(filter: NoteFilter, limit: Int, offset: Int): [Note]!
   findAllComments(limit: Int, offset: Int): [Comment]!
-  findComments(fields: CommentInput, limit: Int, offset: Int): [Comment]!
+  findComments(filter: CommentFilter, limit: Int, offset: Int): [Comment]!
   findAllTests(limit: Int, offset: Int): [Test]!
-  findTests(fields: TestInput, limit: Int, offset: Int): [Test]!
+  findTests(filter: TestFilter, limit: Int, offset: Int): [Test]!
 }
 
 type Subscription {
-  newNote(input: NoteInput): Note!
-  updatedNote(input: NoteInput): Note!
-  deletedNote(input: NoteInput): Note!
-  newComment(input: CommentInput): Comment!
-  updatedComment(input: CommentInput): Comment!
-  deletedComment(input: CommentInput): Comment!
-  newTest(input: TestInput): Test!
-  updatedTest(input: TestInput): Test!
-  deletedTest(input: TestInput): Test!
+  newNote(data: NoteData): Note!
+  updatedNote(data: NoteData): Note!
+  deletedNote(data: NoteData): Note!
+  newComment(data: CommentData): Comment!
+  updatedComment(data: CommentData): Comment!
+  deletedComment(data: CommentData): Comment!
+  newTest(data: TestData): Test!
+  updatedTest(data: TestData): Test!
+  deletedTest(data: TestData): Test!
 }
 
 \\"\\"\\"@model\\"\\"\\"
@@ -254,7 +303,12 @@ type Test {
   name: String
 }
 
-input TestInput {
+input TestData {
+  id: ID
+  name: String
+}
+
+input TestFilter {
   id: ID
   name: String
 }
