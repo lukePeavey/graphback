@@ -20,6 +20,7 @@ const methodMapping = {
 
 const notMethodMap = {
   where: 'whereNot',
+  whereNull: 'whereNotNull',
   between: 'whereNotBetween',
   in: 'whereNotIn'
 }
@@ -55,8 +56,6 @@ function builderMethod(method: string, or?: boolean, not?: boolean) {
     method = methodMapping[method]
   } else if (not && notMethodMap[method]) {
     method = notMethodMap[method]
-  } else {
-    method = 'where'
   }
 
   if (or) {
@@ -100,7 +99,10 @@ function where(builder: Knex.QueryBuilder, filter: any, or: boolean = false, not
 
     const exprEntry = Object.entries(expr)[0]
 
-    if (Object.keys(methodMapping).includes(exprEntry[0])) {
+    // eslint-disable-next-line no-null/no-null
+    if (exprEntry[1] === null) {
+      builder = builder[builderMethod('whereNull', or, not)](col)
+    } else if (Object.keys(methodMapping).includes(exprEntry[0])) {
       builder = builder[builderMethod(exprEntry[0], or, not)](col, exprEntry[1])
     } else if (exprEntry[0] === 'contains') {
       builder = builder[builderMethod('where', or, not)](col, mapOperator(exprEntry[0]), `%${exprEntry[1]}%`)
